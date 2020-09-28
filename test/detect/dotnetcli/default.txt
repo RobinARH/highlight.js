@@ -1,0 +1,3 @@
+dotnet add package Newtonsoft.Json
+dotnet add ToDo.csproj package Microsoft.Azure.DocumentDB.Core -v 1.0.0
+dotnet add package Microsoft.AspNetCore.StaticFiles -s https://dotnet.myget.org/F/dotnet-core/api/v3/index.json

@@ -1,12 +1,14 @@
 /*
  Language: SQL
  Contributors: Nikolay Lisienko <info@neor.ru>, Heiko August <post@auge8472.de>, Travis Odom <travis.a.odom@gmail.com>, Vadimtro <vadimtro@yahoo.com>, Benjamin Auder <benjamin.auder@gmail.com>
+ Website: https://en.wikipedia.org/wiki/SQL
  Category: common
  */
 
-function(hljs) {
+export default function(hljs) {
   var COMMENT_MODE = hljs.COMMENT('--', '$');
   return {
+    name: 'SQL',
     case_insensitive: true,
     illegal: /[<>{}*]/,
     contains: [
@@ -135,23 +137,22 @@ function(hljs) {
             'true false null unknown',
           built_in:
             'array bigint binary bit blob bool boolean char character date dec decimal float int int8 integer interval number ' +
-            'numeric real record serial serial8 smallint text time timestamp tinyint varchar varying void'
+            'numeric real record serial serial8 smallint text time timestamp tinyint varchar varchar2 varying void'
         },
         contains: [
           {
             className: 'string',
             begin: '\'', end: '\'',
-            contains: [hljs.BACKSLASH_ESCAPE, {begin: '\'\''}]
+            contains: [{begin: '\'\''}]
           },
           {
             className: 'string',
             begin: '"', end: '"',
-            contains: [hljs.BACKSLASH_ESCAPE, {begin: '""'}]
+            contains: [{begin: '""'}]
           },
           {
             className: 'string',
-            begin: '`', end: '`',
-            contains: [hljs.BACKSLASH_ESCAPE]
+            begin: '`', end: '`'
           },
           hljs.C_NUMBER_MODE,
           hljs.C_BLOCK_COMMENT_MODE,

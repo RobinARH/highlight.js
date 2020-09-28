@@ -2,10 +2,11 @@
 Language: Rust
 Author: Andrey Vlasovskikh <andrey.vlasovskikh@gmail.com>
 Contributors: Roman Shmatov <romanshmatov@gmail.com>, Kasper Andersen <kma_untrusted@protonmail.com>
-Category: system
+Website: https://www.rust-lang.org
+Category: common, system
 */
 
-function(hljs) {
+export default function(hljs) {
   var NUM_SUFFIX = '([ui](8|16|32|64|128|size)|f(32|64))\?';
   var KEYWORDS =
     'abstract as async await become box break const continue crate do dyn ' +
@@ -33,6 +34,7 @@ function(hljs) {
     'option_env! print! println! select! stringify! try! unimplemented! ' +
     'unreachable! vec! write! writeln! macro_rules! assert_ne! debug_assert_ne!';
   return {
+    name: 'Rust',
     aliases: ['rs'],
     keywords: {
       keyword:

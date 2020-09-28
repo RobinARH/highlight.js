@@ -10,7 +10,7 @@ function(hljs) {
 
     var BLOCK_TEXT = {
         begin: "[@]{0,1}<text>",
-        returnBegin: true,  
+        returnBegin: true,
         end: "</text>",
         returnEnd: true,
         subLanguage: "cshtml",
@@ -28,14 +28,14 @@ function(hljs) {
     };
 
     var DIRECTIVES = {
-        begin: "^@(model|using|inherits|inject)[^\\r\\n{\\(]*$",
+        begin: "^@(addTagHelper|attribute|implements|inherits|inject|model|namespace|using)[^\\r\\n{\\(]*$",
         end: "$",
         className: SPECIAL_SYMBOL_CLASSNAME,
         returnBegin: true,
         returnEnd: true,
-        contains: [ 
+        contains: [
             {
-                begin: "@(model|using|inherits|inject)",
+                begin: "@(addTagHelper|attribute|implements|inherits|inject|model|namespace|using)",
                 className: SPECIAL_SYMBOL_CLASSNAME,
             },
             {
@@ -60,7 +60,7 @@ function(hljs) {
             { begin: "[a-zA-Z]+@" },
         ],
         skip: true
-    }
+    };
 
     var ONE_LINE_EXPRESSION = {
         begin: "@[a-zA-Z]+",
@@ -152,8 +152,6 @@ function(hljs) {
         ],
     };
 
-    
-
     var BUILT_IN_CODE_BLOCKS_VARIANTS = [
         {
             begin: "@for[\\s]*\\([^{]+[\\s]*{",
@@ -184,6 +182,7 @@ function(hljs) {
             end: "}"
         },
     ];
+
     var BUILT_IN_CODE_BLOCKS = {
         variants: BUILT_IN_CODE_BLOCKS_VARIANTS,
         returnBegin: true,
@@ -256,7 +255,6 @@ function(hljs) {
         ]
     };
 
-
     var BLOCK_TRY = {
         begin: "@try[\\s]*{",
         end: "}",
@@ -317,7 +315,6 @@ function(hljs) {
         ]
     };
 
-
     var BLOCK_FUNCTIONS = {
         begin: "@functions[\\s]*{",
         end: "}",
@@ -364,7 +361,7 @@ function(hljs) {
                 endsParent: true
             }
         ]
-    }
+    };
 
     return {
         subLanguage: 'xml',

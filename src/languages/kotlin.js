@@ -1,10 +1,13 @@
 /*
  Language: Kotlin
+ Description: Kotlin is an OSS statically typed programming language that targets the JVM, Android, JavaScript and Native.
  Author: Sergey Mashkov <cy6erGn0m@gmail.com>
+ Website: https://kotlinlang.org
+ Category: common
  */
 
 
-function(hljs) {
+export default function(hljs) {
   var KEYWORDS = {
     keyword:
       'abstract as val var vararg get set class object open private protected public noinline ' +
@@ -47,7 +50,7 @@ function(hljs) {
     className: 'string',
     variants: [
       {
-        begin: '"""', end: '"""',
+        begin: '"""', end: '"""(?=[^"])',
         contains: [VARIABLE, SUBST]
       },
       // Can't use built-in modes easily, as we want to use STRING in the meta
@@ -123,6 +126,7 @@ function(hljs) {
   KOTLIN_PAREN_TYPE.variants[1].contains = [ KOTLIN_PAREN_TYPE2 ];
 
   return {
+    name: 'Kotlin',
     aliases: ['kt'],
     keywords: KEYWORDS,
     contains : [

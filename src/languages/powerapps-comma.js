@@ -3,9 +3,9 @@ Language: PowerApps-comma (comma decimal separator)
 Author: Greg Lindhorst <gregli-msft@users.noreply.github.com>
 Description: PowerApps formulae
 
-Like Excel, PowerApps localizes the language for numbers: users in France 
-write "1,234" while users in Australia write "1.234".  This has a trickle 
-down effect on the character used to separate items in function argument 
+Like Excel, PowerApps localizes the language for numbers: users in France
+write "1,234" while users in Australia write "1.234".  This has a trickle
+down effect on the character used to separate items in function argument
 lists and record definitions, and the chaining operator separating function
 calls.
 
@@ -19,8 +19,8 @@ calls.
         Lists: Collect( a; b; { value: 1,234; result: 4,567 } )
         Chaining: Set( x; 1,234 );; Notify( "Result is" & x )
 
-Unfortunately, one coloring definition can't cover both of these cases.  
-For example, "Max(1,2)" is valid with both dot separator (result 2) 
+Unfortunately, one coloring definition can't cover both of these cases.
+For example, "Max(1,2)" is valid with both dot separator (result 2)
 and comma separator (result 1,2), with the coloring of the comma between
 the 1 and 2 being important for reader understanding.
 */
@@ -30,7 +30,7 @@ function(hljs) {
         aliases: ['powerapps-comma'],
         keywords: {
             keyword:
-                'Acceleration App Compass Connection Location ThisItem Parent',
+                'Acceleration|10 App Compass|10 Connection Location|10 ThisItem|10 Parent',
              literal:
                 'true false'
         },

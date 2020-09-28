@@ -7,30 +7,15 @@ function(hljs) {
 
   // qflat specific declarations
 
-  var TYPES = {
-    className: 'keyword',
-    begin: '\\b(Int|Double|Bool|Qubit|Pauli|Result|Range|String)\\b'
-  };
-
-  var RESERVED = {
-    className: 'keyword',
-    begin: '\\b(let|set|new|using|borrowing|newtype|mutable|namespace|open|operation|function|body|(a|A)djoint|(c|C)ontrolled|self|auto|none)\\b'
-  };
-
-  var CONSTANTS = {
-    className: 'constant',
-    begin: '\\b(true|false|Pauli(I|X|Y|Z)|One|Zero)\\b',
-  };
-
   var KEYWORDS = {
-    className: 'control',
-    begin: '\\b(if|elif|else|repeat|until|fixup|for|in|\\.\\.|return|fail)\\b',
-  };
-
-  var LIBRARY = {
-    className: 'helper',
-    begin: '\\b(Message|Length|Assert|AssertProb|AssertEqual|Random|Floor|Float|Start|Step|Stop|X|Y|Z|H|HY|S|T|SWAP|CNOT|CCNOT|MultiX|R|RFrac|Rx|Ry|Rz|R1|R1Frac|Exp|ExpFrac|Measure|M|MultiM)\\b'
-  };
+    keyword: 'Int Double Bool Qubit Pauli Result Range String ' +
+    'let set new using borrowing newtype mutable namespace open operation function body adjoint Adjoint controlled Controlled self auto none',
+    constant: 'true false PauliI PauliX PauliY PauliZ One Zero',
+    control: 'if elif else repeat until fixup for in .. return fail',
+    helper: 'Message Length Assert AssertProb AssertEqual Random Floor Float ' +
+    'Start Step Stop X Y Z H HY S T SWAP CNOT CCNOT MultiX R RFrac Rx Ry Rz R1 R1Frac ' +
+    'Exp ExpFrac Measure M MultiM'
+  }
 
   // C# reserved words, which cannot be used in Q#
   var CSHARP_RESERVED = {
@@ -141,33 +126,15 @@ function(hljs) {
             contains: [
               STRING,
               hljs.C_NUMBER_MODE,
-              hljs.C_BLOCK_COMMENT_MODE,
-              TYPES,
-              RESERVED,
-              CONSTANTS,
-              KEYWORDS,
-              LIBRARY,
-              CSHARP_RESERVED
+              hljs.C_BLOCK_COMMENT_MODE
             ]
           },
           hljs.C_LINE_COMMENT_MODE,
           hljs.C_BLOCK_COMMENT_MODE,
-          STRING,
-          TYPES,
-          RESERVED,
-          CONSTANTS,
-          KEYWORDS,
-          LIBRARY,
-          CSHARP_RESERVED
+          STRING
         ]
       },
-      STRING,
-      TYPES,
-      RESERVED,
-      CONSTANTS,
-      KEYWORDS,
-      LIBRARY,
-      CSHARP_RESERVED
+      STRING
     ]
   };
 }

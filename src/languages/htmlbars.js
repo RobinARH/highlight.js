@@ -3,10 +3,11 @@ Language: HTMLBars
 Requires: xml.js
 Author: Michael Johnston <lastobelus@gmail.com>
 Description: Matcher for HTMLBars
+Website: https://github.com/tildeio/htmlbars
 Category: template
 */
 
-function(hljs) {
+export default function(hljs) {
   var BUILT_INS = 'action collection component concat debugger each each-in else get hash if input link-to loc log mut outlet partial query-params render textarea unbound unless with yield view';
 
   var ATTR_ASSIGNMENT = {
@@ -49,6 +50,7 @@ function(hljs) {
   };
 
   return {
+    name: 'HTMLBars',
     case_insensitive: true,
     subLanguage: 'xml',
     contains: [

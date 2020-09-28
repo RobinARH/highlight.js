@@ -2,9 +2,10 @@
 Language: Java
 Author: Vsevolod Solovyov <vsevolod.solovyov@gmail.com>
 Category: common, enterprise
+Website: https://www.java.com/
 */
 
-function(hljs) {
+export default function(hljs) {
   var JAVA_IDENT_RE = '[\u00C0-\u02B8a-zA-Z_$][\u00C0-\u02B8a-zA-Z_$0-9]*';
   var GENERIC_IDENT_RE = JAVA_IDENT_RE + '(<' + JAVA_IDENT_RE + '(\\s*,\\s*' + JAVA_IDENT_RE + ')*>)?';
   GENERIC_IDENT_RE = JAVA_IDENT_RE + '(<' + GENERIC_IDENT_RE + '(\\s*,\\s*' + GENERIC_IDENT_RE + ')*>)?';
@@ -15,6 +16,17 @@ function(hljs) {
     'package default double public try this switch continue throws protected public private ' +
     'module requires exports do';
 
+  var ANNOTATION = {
+    className: 'meta',
+    begin: '@' + JAVA_IDENT_RE,
+    contains:[
+      {
+        begin: /\(/,
+        end: /\)/,
+        contains: ["self"] // allow nested () inside our annotation
+      },
+    ]
+  }
   // https://docs.oracle.com/javase/7/docs/technotes/guides/language/underscores-literals.html
   var JAVA_NUMBER_RE = '\\b' +
     '(' +
@@ -37,6 +49,7 @@ function(hljs) {
   };
 
   return {
+    name: 'Java',
     aliases: ['jsp'],
     keywords: KEYWORDS,
     illegal: /<\/|#/,
@@ -95,6 +108,7 @@ function(hljs) {
             keywords: KEYWORDS,
             relevance: 0,
             contains: [
+              ANNOTATION,
               hljs.APOS_STRING_MODE,
               hljs.QUOTE_STRING_MODE,
               hljs.C_NUMBER_MODE,
@@ -106,9 +120,7 @@ function(hljs) {
         ]
       },
       JAVA_NUMBER_MODE,
-      {
-        className: 'meta', begin: '@[A-Za-z]+'
-      }
+      ANNOTATION
     ]
   };
 }

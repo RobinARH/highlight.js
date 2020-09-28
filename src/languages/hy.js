@@ -1,11 +1,12 @@
 /*
 Language: Hy
-Description: Hy syntax (based on clojure.js)
+Description: Hy is a wonderful dialect of Lisp that’s embedded in Python.
 Author: Sergey Sobko <s.sobko@profitware.ru>
+Website: http://docs.hylang.org/en/stable/
 Category: lisp
 */
 
-function(hljs) {
+export default function(hljs) {
   var keywords = {
     'builtin-name':
       // keywords
@@ -101,6 +102,7 @@ function(hljs) {
   COLLECTION.contains = DEFAULT_CONTAINS;
 
   return {
+    name: 'Hy',
     aliases: ['hylang'],
     illegal: /\S/,
     contains: [SHEBANG, LIST, STRING, HINT, HINT_COL, COMMENT, KEY, COLLECTION, NUMBER, LITERAL]

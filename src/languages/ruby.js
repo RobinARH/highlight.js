@@ -1,11 +1,13 @@
 /*
 Language: Ruby
+Description: Ruby is a dynamic, open source programming language with a focus on simplicity and productivity.
+Website: https://www.ruby-lang.org/
 Author: Anton Kovalyov <anton@kovalyov.net>
 Contributors: Peter Leonov <gojpeg@yandex.ru>, Vasily Polovnyov <vast@whiteants.net>, Loren Segal <lsegal@soen.ca>, Pascal Hurni <phi@ruby-reactive.org>, Cedric Sohrauer <sohrauer@googlemail.com>
 Category: common
 */
 
-function(hljs) {
+export default function(hljs) {
   var RUBY_METHOD_RE = '[a-zA-Z_]\\w*[!?=]?|[-+~]\\@|<<|>>|=~|===?|<=>|[<>]=?|\\*\\*|[-/+%^&*~`|]|\\[\\]=?';
   var RUBY_KEYWORDS = {
     keyword:
@@ -183,6 +185,7 @@ function(hljs) {
   ];
 
   return {
+    name: 'Ruby',
     aliases: ['rb', 'gemspec', 'podspec', 'thor', 'irb'],
     keywords: RUBY_KEYWORDS,
     illegal: /\/\*/,

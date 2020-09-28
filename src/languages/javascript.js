@@ -1,9 +1,19 @@
 /*
 Language: JavaScript
+Description: JavaScript (JS) is a lightweight, interpreted, or just-in-time compiled programming language with first-class functions.
 Category: common, scripting
+Website: https://developer.mozilla.org/en-US/docs/Web/JavaScript
 */
 
-function(hljs) {
+export default function(hljs) {
+  var FRAGMENT = {
+    begin: '<>',
+    end: '</>'
+  };
+  var XML_TAG = {
+    begin: /<[A-Za-z0-9\\._:-]+/,
+    end: /\/[A-Za-z0-9\\._:-]+>|\/>/
+  };
   var IDENT_RE = '[A-Za-z$_][0-9A-Za-z$_]*';
   var KEYWORDS = {
     keyword:
@@ -28,9 +38,9 @@ function(hljs) {
   var NUMBER = {
     className: 'number',
     variants: [
-      { begin: '\\b(0[bB][01]+)' },
-      { begin: '\\b(0[oO][0-7]+)' },
-      { begin: hljs.C_NUMBER_RE }
+      { begin: '\\b(0[bB][01]+)n?' },
+      { begin: '\\b(0[oO][0-7]+)n?' },
+      { begin: hljs.C_NUMBER_RE + 'n?' }
     ],
     relevance: 0
   };
@@ -83,9 +93,17 @@ function(hljs) {
     hljs.C_BLOCK_COMMENT_MODE,
     hljs.C_LINE_COMMENT_MODE
   ]);
+  var PARAMS = {
+    className: 'params',
+    begin: /\(/, end: /\)/,
+    excludeBegin: true,
+    excludeEnd: true,
+    contains: PARAMS_CONTAINS
+  };
 
   return {
-    aliases: ['js', 'jsx', 'bodejs'],
+    name: 'JavaScript',
+    aliases: ['js', 'jsx', 'mjs', 'cjs'],
     keywords: KEYWORDS,
     contains: [
       {
@@ -103,10 +121,43 @@ function(hljs) {
       CSS_TEMPLATE,
       TEMPLATE_STRING,
       hljs.C_LINE_COMMENT_MODE,
+      hljs.COMMENT(
+        '/\\*\\*',
+        '\\*/',
+        {
+          relevance : 0,
+          contains : [
+            {
+              className : 'doctag',
+              begin : '@[A-Za-z]+',
+              contains : [
+                {
+                  className: 'type',
+                  begin: '\\{',
+                  end: '\\}',
+                  relevance: 0
+                },
+                {
+                  className: 'variable',
+                  begin: IDENT_RE + '(?=\\s*(-)|$)',
+                  endsParent: true,
+                  relevance: 0
+                },
+                // eat spaces (not newlines) so we can find
+                // types or variables
+                {
+                  begin: /(?=[^\n])\s/,
+                  relevance: 0
+                },
+              ]
+            }
+          ]
+        }
+      ),
       hljs.C_BLOCK_COMMENT_MODE,
       NUMBER,
       { // object attr container
-        begin: /[{,]\s*/, relevance: 0,
+        begin: /[{,\n]\s*/, relevance: 0,
         contains: [
           {
             begin: IDENT_RE + '\\s*:', returnBegin: true,
@@ -146,26 +197,28 @@ function(hljs) {
               }
             ]
           },
+          { // could be a comma delimited list of params to a function call
+            begin: /,/, relevance: 0,
+          },
           {
             className: '',
             begin: /\s/,
             end: /\s*/,
             skip: true,
           },
-          { // E4X / JSX
-            begin: /</, end: /(\/[A-Za-z0-9\\._:-]+|[A-Za-z0-9\\._:-]+\/)>/,
+          { // JSX
+            variants: [
+              { begin: FRAGMENT.begin, end: FRAGMENT.end },
+              { begin: XML_TAG.begin, end: XML_TAG.end }
+            ],
             subLanguage: 'xml',
             contains: [
-              { begin: /<[A-Za-z0-9\\._:-]+\s*\/>/, skip: true },
               {
-                begin: /<[A-Za-z0-9\\._:-]+/, end: /(\/[A-Za-z0-9\\._:-]+|[A-Za-z0-9\\._:-]+\/)>/, skip: true,
-                contains: [
-                  { begin: /<[A-Za-z0-9\\._:-]+\s*\/>/, skip: true },
-                  'self'
-                ]
+                begin: XML_TAG.begin, end: XML_TAG.end, skip: true,
+                contains: ['self']
               }
             ]
-          }
+          },
         ],
         relevance: 0
       },
@@ -174,19 +227,14 @@ function(hljs) {
         beginKeywords: 'function', end: /\{/, excludeEnd: true,
         contains: [
           hljs.inherit(hljs.TITLE_MODE, {begin: IDENT_RE}),
-          {
-            className: 'params',
-            begin: /\(/, end: /\)/,
-            excludeBegin: true,
-            excludeEnd: true,
-            contains: PARAMS_CONTAINS
-          }
+          PARAMS
         ],
         illegal: /\[|%/
       },
       {
         begin: /\$[(.]/ // relevance booster for a pattern common to JS libs: `$(something)` and `$.something`
       },
+
       hljs.METHOD_GUARD,
       { // ES6 class
         className: 'class',
@@ -198,7 +246,18 @@ function(hljs) {
         ]
       },
       {
-        beginKeywords: 'constructor get set', end: /\{/, excludeEnd: true
+        beginKeywords: 'constructor', end: /\{/, excludeEnd: true
+      },
+      {
+        begin:'(get|set)\\s*(?=' + IDENT_RE+ '\\()',
+        end: /{/,
+        keywords: "get set",
+        contains: [
+          hljs.inherit(hljs.TITLE_MODE, {begin: IDENT_RE}),
+          { begin: /\(\)/ }, // eat to avoid empty params
+          PARAMS
+        ]
+
       }
     ],
     illegal: /#(?!!)/

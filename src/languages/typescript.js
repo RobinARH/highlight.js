@@ -3,10 +3,11 @@ Language: TypeScript
 Author: Panu Horsmalahti <panu.horsmalahti@iki.fi>
 Contributors: Ike Ku <dempfi@yahoo.com>
 Description: TypeScript is a strict superset of JavaScript
-Category: scripting
+Website: https://www.typescriptlang.org
+Category: common, scripting
 */
 
-function(hljs) {
+export default function(hljs) {
   var JS_IDENT_RE = '[A-Za-z$_][0-9A-Za-z$_]*';
   var KEYWORDS = {
     keyword:
@@ -61,9 +62,9 @@ function(hljs) {
   var NUMBER = {
     className: 'number',
     variants: [
-      { begin: '\\b(0[bB][01]+)' },
-      { begin: '\\b(0[oO][0-7]+)' },
-      { begin: hljs.C_NUMBER_RE }
+      { begin: '\\b(0[bB][01]+)n?' },
+      { begin: '\\b(0[oO][0-7]+)n?' },
+      { begin: hljs.C_NUMBER_RE + 'n?' }
     ],
     relevance: 0
   };
@@ -116,6 +117,7 @@ function(hljs) {
 
 
   return {
+    name: 'TypeScript',
     aliases: ['ts'],
     keywords: KEYWORDS,
     contains: [
@@ -171,7 +173,7 @@ function(hljs) {
       },
       {
         className: 'function',
-        begin: 'function', end: /[\{;]/, excludeEnd: true,
+        beginKeywords: 'function', end: /[\{;]/, excludeEnd: true,
         keywords: KEYWORDS,
         contains: [
           'self',
@@ -182,7 +184,7 @@ function(hljs) {
         relevance: 0 // () => {} is more typical in TypeScript
       },
       {
-        beginKeywords: 'constructor', end: /\{/, excludeEnd: true,
+        beginKeywords: 'constructor', end: /[\{;]/, excludeEnd: true,
         contains: [
           'self',
           PARAMS

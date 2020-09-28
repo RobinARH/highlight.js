@@ -72,7 +72,8 @@ Regular expression ending a mode. For example a single quote for strings or "$" 
 It's often the case that a beginning regular expression defines the entire mode and doesn't need any special ending.
 For example a number can be defined with ``begin: "\\b\\d+"`` which spans all the digits.
 
-If absent, ``end`` defaults to a regexp that matches anything, so the mode ends immediately.
+If absent, ``end`` defaults to a regexp that matches anything, so the mode ends immediately (after possibly
+matching any ``contains`` sub-modes).
 
 Sometimes a mode can end not by itself but implicitly with its containing (parent) mode.
 This is achieved with :ref:`endsWithParent <endsWithParent>` attribute.
@@ -88,21 +89,25 @@ Used instead of ``begin`` for modes starting with keywords to avoid needless rep
 ::
 
   {
-    begin: '\\b(extends|implements) ',
-    keywords: 'extends implements'
+    begin: '\\b(class|interface)\\b',
+    keywords: 'class interface'
   }
 
-… becomes:
+… can often be shortened to:
 
 ::
 
   {
-    beginKeywords: 'extends implements'
+    beginKeywords: 'class interface'
   }
 
 Unlike the :ref:`keywords <keywords>` attribute, this one allows only a simple list of space separated keywords.
 If you do need additional features of ``keywords`` or you just need more keywords for this mode you may include ``keywords`` along with ``beginKeywords``.
 
+Note: ``beginKeywords`` also checks for a ``.`` before or after the keywords and will fail to match if one is found.
+This is to avoid false positives for method calls or property accesses.
+
+Ex. ``class A { ... }`` would match while ``A.class == B.class`` would not.
 
 .. _endsWithParent:
 
@@ -299,13 +304,28 @@ each having all the attributes from the main definition augmented or overridden 
 
   {
     className: 'string',
-    contains: [hljs.BACKSLASH_ESCAPE],
+    contains: ['self', hljs.BACKSLASH_ESCAPE],
     relevance: 0,
     variants: [
       {begin: /"/, end: /"/},
       {begin: /'/, end: /'/, relevance: 1}
     ]
   }
+
+Note: ``variants`` has very specific behavior with regards to ``contains: ['self']``.
+Lets consider the example above. While you might think this would allow you to
+embed any type of string (double or single quoted) within any other string, it
+does not allow for this.
+
+The variants are compiled into to two *discrete* modes::
+
+  { className: 'string', begin: /"/, contains: ['self', ... ] }
+  { className: 'string', begin: /'/, contains: ['self', ... ] }
+
+Each mode's ``self`` refers only to the new expanded mode, not the original mode
+with variants (which no longer exists after compiling).
+
+Further info: https://github.com/highlightjs/highlight.js/issues/826
 
 
 .. _subLanguage:

@@ -1,0 +1,7 @@
+ttsBegin;
+while select forUpdate myTable
+    where myTable.AccountNum >='200';
+{
+    myTable.doDelete();
+}
+ttsCommit;

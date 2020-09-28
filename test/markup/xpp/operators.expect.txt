@@ -1,0 +1,12 @@
+<span class="hljs-keyword">int</span> a = <span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">4</span>; <span class="hljs-comment">// Perform four left shifts on 1 (1*2*2*2*2). a=16.</span>
+<span class="hljs-keyword">int</span> b = <span class="hljs-number">16</span> &gt;&gt; <span class="hljs-number">4</span>;  <span class="hljs-comment">// Perform four right shifts on 16 (16/2/2/2/2). b=1.</span>
+<span class="hljs-keyword">int</span> c = <span class="hljs-number">4</span> * <span class="hljs-number">5</span>;  <span class="hljs-comment">// Multiply 4 by 5. c=20.</span>
+<span class="hljs-keyword">int</span> d = <span class="hljs-number">20</span> / <span class="hljs-number">5</span>;  <span class="hljs-comment">// Divide 20 by 5. d=4.</span>
+<span class="hljs-keyword">int</span> e = <span class="hljs-number">100</span> <span class="hljs-keyword">div</span> <span class="hljs-number">21</span>;  <span class="hljs-comment">// Return the integer division of 100 by 21. e=4 (4*21 = 84, remainder 16).</span>
+<span class="hljs-keyword">int</span> f = <span class="hljs-number">100</span> <span class="hljs-keyword">mod</span> <span class="hljs-number">21</span>;  <span class="hljs-comment">// Return the remainder of the integer division of 100 by 21. f=16.</span>
+<span class="hljs-keyword">int</span> g = ~<span class="hljs-number">1</span>;  <span class="hljs-comment">// Binary negate 1 (all bits are reversed). g=-2.</span>
+<span class="hljs-keyword">int</span> h = <span class="hljs-number">1</span> &amp; <span class="hljs-number">3</span>;  <span class="hljs-comment">// Binary AND. Return the bits that are in common in the two integers. h=1.</span>
+<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span> | <span class="hljs-number">3</span>;  <span class="hljs-comment">// Binary OR. Return the bits that are set in either 1 or 3. i=3.</span>
+<span class="hljs-keyword">int</span> j = <span class="hljs-number">1</span> ^ <span class="hljs-number">3</span>;  <span class="hljs-comment">// Binary XOR. Return the bits that are set in 1 and NOT set in 3, and vice versa. j=2.</span>
+<span class="hljs-keyword">int</span> k = <span class="hljs-number">1</span> + <span class="hljs-number">3</span>;  <span class="hljs-comment">// Add 1 and 3. k=4.</span>
+<span class="hljs-keyword">int</span> l = <span class="hljs-number">3</span> - <span class="hljs-number">1</span>;  <span class="hljs-comment">// Subtract 1 from 3. l=2.</span>

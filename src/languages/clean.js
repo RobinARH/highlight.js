@@ -5,8 +5,9 @@ Category: functional
 Website: http://clean.cs.ru.nl
 */
 
-function(hljs) {
+export default function(hljs) {
   return {
+    name: 'Clean',
     aliases: ['clean','icl','dcl'],
     keywords: {
       keyword:

@@ -4,9 +4,10 @@ Author: Dmytrii Nagirniak <dnagir@gmail.com>
 Contributors: Oleg Efimov <efimovov@gmail.com>, Cédric Néhémie <cedric.nehemie@gmail.com>
 Description: CoffeeScript is a programming language that transcompiles to JavaScript. For info about language see http://coffeescript.org/
 Category: common, scripting
+Website: https://coffeescript.org
 */
 
-function(hljs) {
+export default function(hljs) {
   var KEYWORDS = {
     keyword:
       // JS keywords
@@ -60,13 +61,13 @@ function(hljs) {
           contains: [SUBST, hljs.HASH_COMMENT_MODE]
         },
         {
-          begin: '//[gim]*',
+          begin: '//[gim]{0,3}(?=\\W)',
           relevance: 0
         },
         {
           // regex can't start with space to parse x / 2 / 3 as two divisions
           // regex can't start with *, and it supports an "illegal" in the main mode
-          begin: /\/(?![ *])(\\\/|.)*?\/[gim]*(?=\W|$)/
+          begin: /\/(?![ *]).*?(?![\\]).\/[gim]{0,3}(?=\W)/
         }
       ]
     },
@@ -103,6 +104,7 @@ function(hljs) {
   };
 
   return {
+    name: 'CoffeeScript',
     aliases: ['coffee', 'cson', 'iced'],
     keywords: KEYWORDS,
     illegal: /\/\*/,

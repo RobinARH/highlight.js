@@ -3,9 +3,10 @@ Language: Elixir
 Author: Josh Adams <josh@isotope11.com>
 Description: language definition for Elixir source code files (.ex and .exs).  Based on ruby language support.
 Category: functional
+Website: https://elixir-lang.org
 */
 
-function(hljs) {
+export default function(hljs) {
   var ELIXIR_IDENT_RE = '[a-zA-Z_][a-zA-Z0-9_.]*(\\!|\\?)?';
   var ELIXIR_METHOD_RE = '[a-zA-Z_]\\w*[!?=]?|[-+~]\\@|<<|>>|=~|===?|<=>|[<>]=?|\\*\\*|[-/+%^&*~`|]|\\[\\]=?';
   var ELIXIR_KEYWORDS =
@@ -18,16 +19,82 @@ function(hljs) {
     lexemes: ELIXIR_IDENT_RE,
     keywords: ELIXIR_KEYWORDS
   };
+  var NUMBER = {
+    className: 'number',
+    begin: '(\\b0o[0-7_]+)|(\\b0b[01_]+)|(\\b0x[0-9a-fA-F_]+)|(-?\\b[1-9][0-9_]*(.[0-9_]+([eE][-+]?[0-9]+)?)?)',
+    relevance: 0
+  };
+  var SIGIL_DELIMITERS = '[/|([{<"\']'
+  var LOWERCASE_SIGIL = {
+    className: 'string',
+    begin: '~[a-z]' + '(?=' + SIGIL_DELIMITERS + ')',
+    contains: [
+      {
+        endsParent:true,
+        contains: [{
+          contains: [hljs.BACKSLASH_ESCAPE, SUBST],
+          variants: [
+            { begin: /"/, end: /"/ },
+            { begin: /'/, end: /'/ },
+            { begin: /\//, end: /\// },
+            { begin: /\|/, end: /\|/ },
+            { begin: /\(/, end: /\)/ },
+            { begin: /\[/, end: /\]/ },
+            { begin: /\{/, end: /\}/ },
+            { begin: /</, end: />/ }
+          ]
+        }]
+      },
+    ],
+  };
+
+  var UPCASE_SIGIL = {
+    className: 'string',
+    begin: '~[A-Z]' + '(?=' + SIGIL_DELIMITERS + ')',
+    contains: [
+      { begin: /"/, end: /"/ },
+      { begin: /'/, end: /'/ },
+      { begin: /\//, end: /\// },
+      { begin: /\|/, end: /\|/ },
+      { begin: /\(/, end: /\)/ },
+      { begin: /\[/, end: /\]/ },
+      { begin: /\{/, end: /\}/ },
+      { begin: /\</, end: /\>/ }
+    ]
+  };
+
   var STRING = {
     className: 'string',
     contains: [hljs.BACKSLASH_ESCAPE, SUBST],
     variants: [
       {
+        begin: /"""/, end: /"""/,
+      },
+      {
+        begin: /'''/, end: /'''/,
+      },
+      {
+        begin: /~S"""/, end: /"""/,
+        contains: []
+      },
+      {
+        begin: /~S"/, end: /"/,
+        contains: []
+      },
+      {
+        begin: /~S'''/, end: /'''/,
+        contains: []
+      },
+      {
+        begin: /~S'/, end: /'/,
+        contains: []
+      },
+      {
         begin: /'/, end: /'/
       },
       {
         begin: /"/, end: /"/
-      }
+      },
     ]
   };
   var FUNCTION = {
@@ -46,6 +113,8 @@ function(hljs) {
   });
   var ELIXIR_DEFAULT_CONTAINS = [
     STRING,
+    UPCASE_SIGIL,
+    LOWERCASE_SIGIL,
     hljs.HASH_COMMENT_MODE,
     CLASS,
     FUNCTION,
@@ -63,11 +132,7 @@ function(hljs) {
       begin: ELIXIR_IDENT_RE + ':(?!:)',
       relevance: 0
     },
-    {
-      className: 'number',
-      begin: '(\\b0[0-7_]+)|(\\b0x[0-9a-fA-F_]+)|(\\b[1-9][0-9_]*(\\.[0-9_]+)?)|[0_]\\b',
-      relevance: 0
-    },
+    NUMBER,
     {
       className: 'variable',
       begin: '(\\$\\W)|((\\$|\\@\\@?)(\\w+))'
@@ -79,6 +144,15 @@ function(hljs) {
       begin: '(' + hljs.RE_STARTERS_RE + ')\\s*',
       contains: [
         hljs.HASH_COMMENT_MODE,
+        {
+          // to prevent false regex triggers for the division function:
+          // /:
+          begin: /\/: (?=\d+\s*[,\]])/,
+          relevance: 0,
+          contains: [
+            NUMBER
+          ]
+        },
         {
           className: 'regexp',
           illegal: '\\n',
@@ -99,6 +173,7 @@ function(hljs) {
   SUBST.contains = ELIXIR_DEFAULT_CONTAINS;
 
   return {
+    name: 'Elixir',
     lexemes: ELIXIR_IDENT_RE,
     keywords: ELIXIR_KEYWORDS,
     contains: ELIXIR_DEFAULT_CONTAINS

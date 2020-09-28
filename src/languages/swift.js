@@ -1,12 +1,14 @@
 /*
 Language: Swift
+Description: Swift is a general-purpose programming language built using a modern approach to safety, performance, and software design patterns.
 Author: Chris Eidhof <chris@eidhof.nl>
 Contributors: Nate Cook <natecook@gmail.com>, Alexander Lichter <manniL@gmx.net>
-Category: system
+Website: https://swift.org
+Category: common, system
 */
 
 
-function(hljs) {
+export default function(hljs) {
   var SWIFT_KEYWORDS = {
       keyword: '#available #colorLiteral #column #else #elseif #endif #file ' +
         '#fileLiteral #function #if #imageLiteral #line #selector #sourceLocation ' +
@@ -75,6 +77,7 @@ function(hljs) {
   SUBST.contains = [NUMBERS];
 
   return {
+    name: 'Swift',
     keywords: SWIFT_KEYWORDS,
     contains: [
       STRING,
@@ -125,7 +128,8 @@ function(hljs) {
                   '@NSCopying|@NSManaged|@objc|@objcMembers|@convention|@required|' +
                   '@noreturn|@IBAction|@IBDesignable|@IBInspectable|@IBOutlet|' +
                   '@infix|@prefix|@postfix|@autoclosure|@testable|@available|' +
-                  '@nonobjc|@NSApplicationMain|@UIApplicationMain)'
+                  '@nonobjc|@NSApplicationMain|@UIApplicationMain|@dynamicMemberLookup|' +
+                  '@propertyWrapper)'
 
       },
       {
