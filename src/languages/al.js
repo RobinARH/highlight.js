@@ -9,18 +9,12 @@ function(hljs) {
   var KEYWORDS = {
     keyword:
       // Normal keywords.
-      'abstract anytype as asc at avg break breakpoint by byref case catch changeCompany class client container ' +
-      'continue count crossCompany date ' +
-      'default delegate delete_from desc display div do edit else eventHandler exists extends false final firstFast ' +
-      'firstOnly firstOnly10 firstOnly100 firstOnly1000 flush ' +
-      'for forceLiterals forceNestedLoop forcePlaceholders forceSelectOrder forUpdate from group ' +
-      'if implements insert_recordset int int64 interface is join like ' +
-      'maxof minof mod new next noFetch notExists null optimisticLock order outer pause pessimisticLock print private protected public ' +
-      'real repeatableRead retry return reverse select server setting ' +
-      'static str sum super tableLock this throw try ttsAbort ttsBegin ttsCommit ' +
-      'update_recordset validTimeState void where while window ',
-    literal:
-      'null false true'
+      'ARRAY|ASSERTERROR|BEGIN|BREAK|CASE|DO|DOWNTO|ELSE|END|EVENT|EXIT|FOR|FOREACH|FUNCTION|IF|IMPLEMENTS|IN|INDATASET|INTERFACE|INTERNAL|LOCAL|OF|PROCEDURE|PROGRAM|PROTECTED|REPEAT|RUNONCLIENT|SECURITYFILTERING|SUPPRESSDISPOSE|TEMPORARY|THEN|TO|TRIGGER|UNTIL|VAR|WHILE|WITH|WITHEVENTS' +
+      'AND|DIV|MOD|NOT|OR|XOR' +
+      'AVERAGE|CONST|COUNT|EXIST|FIELD|FILTER|LOOKUP|MAX|MIN|ORDER|SORTING|SUM|TABLEDATA|UPPERLIMIT|WHERE|ASCENDING|DESCENDING' + 
+      'CODEUNIT|PAGE|PAGEEXTENSION|PAGECUSTOMIZATION|DOTNET|ENUM|ENUMEXTENSION|VALUE|QUERY|REPORT|TABLE|TABLEEXTENSION|XMLPORT|PROFILE|CONTROLADDIN' +
+      'Action|Array|Automation|BigInteger|BigText|Blob|Boolean|Byte|Char|ClientType|Code|Codeunit|CompletionTriggerErrorLevel|ConnectionType|Database|DataClassification|DataScope|Date|DateFormula|DateTime|Decimal|DefaultLayout|Dialog|Dictionary|DotNet|DotNetAssembly|DotNetTypeDeclaration|Duration|Enum|ErrorInfo|ErrorType|ExecutionContext|ExecutionMode|FieldClass|FieldRef|FieldType|File|FilterPageBuilder|Guid|InStream|Integer|Joker|KeyRef|List|ModuleDependencyInfo|ModuleInfo|None|Notification|NotificationScope|ObjectType|Option|OutStream|Page|PageResult|Query|Record|RecordId|RecordRef|Report|ReportFormat|SecurityFilter|SecurityFiltering|Table|TableConnectionType|TableFilter|TestAction|TestField|TestFilterField|TestPage|TestPermissions|TestRequestPage|Text|TextBuilder|TextConst|TextEncoding|Time|TransactionModel|TransactionType|Variant|Verbosity|Version|XmlPort|HttpContent|HttpHeaders|HttpClient|HttpRequestMessage|HttpResponseMessage|JsonToken|JsonValue|JsonArray|JsonObject|View|Views|XmlAttribute|XmlAttributeCollection|XmlComment|XmlCData|XmlDeclaration|XmlDocument|XmlDocumentType|XmlElement|XmlNamespaceManager|XmlNameTable|XmlNode|XmlNodeList|XmlProcessingInstruction|XmlReadOptions|XmlText|XmlWriteOptions|WebServiceActionContext|WebServiceActionResultCode|SessionSettings' +
+      'ADDFIRST|ADDLAST|ADDAFTER|ADDBEFORE|ACTION|ACTIONS|AREA|ASSEMBLY|CHARTPART|CUEGROUP|CUSTOMIZES|COLUMN|DATAITEM|DATASET|ELEMENTS|EXTENDS|FIELD|FIELDGROUP|FIELDATTRIBUTE|FIELDELEMENT|FIELDGROUPS|FIELDS|FILTER|FIXED|GRID|GROUP|MOVEAFTER|MOVEBEFORE|KEY|KEYS|LABEL|LABELS|LAYOUT|MODIFY|MOVEFIRST|MOVELAST|MOVEBEFORE|MOVEAFTER|PART|REPEATER|USERCONTROL|REQUESTPAGE|SCHEMA|SEPARATOR|SYSTEMPART|TABLEELEMENT|TEXTATTRIBUTE|TEXTELEMENT|TYPE',
   };
   var NUMBERS = {
     className: 'number',
